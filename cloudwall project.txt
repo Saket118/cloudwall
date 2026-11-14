@@ -1,0 +1,677 @@
+# CloudWall
+## Software Requirements Specification (SRS)
+
+**Document Version:** 1.1  
+**Date:** 14 November 2026  
+**Project Type:** Multi-user Full-Stack Web Application  
+**Status:** Revised Requirements Draft
+
+---
+
+# 1. Project Overview
+
+## 1.1 Project Name
+
+CloudWall – Personal Wallpaper Library
+
+## 1.2 Project Purpose
+
+CloudWall ek multi-user wallpaper management web application hogi jisme registered users apni AI-generated aur other wallpaper images ko ek organized digital library mein upload, store, manage, preview aur download kar sakenge.
+
+Har user apni personal wallpaper library manage kar sakega.
+
+Initially application local development environment mein develop hogi. Is phase mein cloud storage ya third-party cloud image services use nahi hongi.
+
+## 1.3 Problem Statement
+
+Users apni wallpapers ko alag-alag folders aur locations mein store karte hain. Isse:
+
+- Wallpapers organize karna difficult hota hai.
+- Specific wallpaper search karne mein time lagta hai.
+- Categories aur collections maintain karna inconvenient hota hai.
+- Favorite wallpapers separately manage karna difficult hota hai.
+- Images ko centralized interface se preview aur download karna easy nahi hota.
+
+CloudWall in problems ko solve karne ke liye ek centralized personal wallpaper management platform provide karega.
+
+## 1.4 Project Objectives
+
+1. Multiple users ko individually apni wallpaper library manage karne dena.
+2. User registration aur authentication provide karna.
+3. Single aur bulk wallpaper upload support karna.
+4. Wallpapers ko multiple categories mein organize karna.
+5. Collections create aur manage karna.
+6. Wallpaper preview aur download provide karna.
+7. Favorite wallpapers maintain karna.
+8. Search aur filtering provide karna.
+9. Secure user-specific data access maintain karna.
+
+---
+
+# 2. Project Scope
+
+## 2.1 In Scope – Initial Version
+
+- Multi-user registration.
+- User login and logout.
+- User-specific dashboard.
+- Wallpaper single upload.
+- Wallpaper bulk upload.
+- JPG, JPEG, PNG and WEBP support.
+- Maximum 10 MB per image.
+- Wallpaper gallery.
+- Wallpaper preview and details.
+- Wallpaper download.
+- Multiple categories per wallpaper.
+- Category management.
+- Collections management.
+- Favorites.
+- Search and filtering.
+- Wallpaper edit and delete.
+- Basic profile management.
+- Local image storage.
+- User-specific data isolation.
+
+## 2.2 Out of Scope – Initial Version
+
+- Cloudinary, AWS S3 or other cloud storage.
+- Public deployment.
+- Public wallpaper marketplace.
+- Paid subscriptions.
+- Social sharing and public profiles.
+- User-to-user collaboration.
+- AI image generation inside the application.
+- Native Android/iOS application.
+- Payment gateway.
+
+These features future versions mein consider kiye ja sakte hain.
+
+---
+
+# 3. Target Users and Roles
+
+## 3.1 Registered User
+
+Application ka primary user registered account ke through login karega.
+
+User capabilities:
+
+- Register and login.
+- Personal dashboard access.
+- Wallpapers upload karna.
+- Wallpapers preview aur download karna.
+- Categories create/manage karna.
+- Collections create/manage karna.
+- Favorites manage karna.
+- Search and filter.
+- Apni wallpapers edit/delete karna.
+- Profile manage karna.
+
+## 3.2 Admin Role
+
+Separate platform-level admin role abhi final nahi hai.
+
+**Pending decision:** Kya future mein platform administrator chahiye jo users aur application-wide settings manage kar sake?
+
+Initial implementation mein normal registered user apni library ka owner hoga.
+
+---
+
+# 4. Functional Requirements
+
+## FR-01: User Registration
+
+System new users ko account create karne ki facility provide karega.
+
+Requirements:
+
+- User registration form.
+- Name, email and password fields.
+- Email uniqueness validation.
+- Password validation.
+- Password securely hash karke store karna.
+- Registration success/failure response.
+- Duplicate email registration reject karna.
+
+Email verification requirement abhi TBD hai.
+
+## FR-02: User Authentication
+
+System registered users ko securely authenticate karega.
+
+Requirements:
+
+- User login kar sake.
+- User logout kar sake.
+- Invalid credentials par appropriate error show ho.
+- Protected resources unauthenticated users access na kar saken.
+- Authentication state securely manage ho.
+- User sirf apne authorized data ko access kar sake.
+
+Password reset functionality final scope mein confirm honi baaki hai.
+
+## FR-03: User Dashboard
+
+Har registered user ko apna dashboard milega.
+
+Expected information:
+
+- Total wallpapers.
+- Total categories.
+- Total collections.
+- Total favorites.
+- Recently uploaded wallpapers.
+
+Dashboard data logged-in user ke records ke according display hoga.
+
+## FR-04: Wallpaper Upload
+
+System single aur bulk image upload support karega.
+
+### Supported formats
+
+- JPG
+- JPEG
+- PNG
+- WEBP
+
+### File size limit
+
+Maximum 10 MB per image.
+
+### Single upload
+
+User ek image select karke upload kar sakega.
+
+### Bulk upload
+
+User ek operation mein multiple images select karke upload kar sakega.
+
+### Validation requirements
+
+- File extension validation.
+- Actual MIME type validation.
+- Maximum 10 MB per file.
+- Invalid files reject karna.
+- Upload progress/status feedback.
+- Successful files ka metadata database mein save karna.
+- Failed uploads ko appropriately report karna.
+
+### Storage requirements
+
+- Images Laravel local filesystem mein store hongi.
+- Image metadata MySQL mein store hoga.
+- Files user-specific ownership ke saath associate hongi.
+- Initial version mein cloud storage use nahi hoga.
+
+## FR-05: Wallpaper Gallery
+
+System logged-in user ki wallpapers gallery mein display karega.
+
+Requirements:
+
+- User ki uploaded wallpapers display hon.
+- Thumbnail/preview available ho.
+- Wallpaper title display ho.
+- Category information display ho.
+- Wallpaper detail page open ho.
+- Empty gallery message show ho.
+- Kisi doosre user ki private wallpapers display na hon.
+
+## FR-06: Wallpaper Details and Preview
+
+User selected wallpaper ka detailed preview dekh sakega.
+
+Expected information:
+
+- Full image preview.
+- Wallpaper title.
+- File format.
+- Image dimensions.
+- File size.
+- Upload date.
+- Assigned categories.
+- Assigned collections.
+- Favorite status.
+
+## FR-07: Wallpaper Download
+
+User apni authorized wallpaper ko device par download kar sakega.
+
+Requirements:
+
+- Original image download available ho.
+- Valid image file download ho.
+- Appropriate filename use ho.
+- Unauthorized download requests reject hon.
+
+## FR-08: Category Management
+
+Users apni categories create aur manage kar sakenge.
+
+Requirements:
+
+- Category create.
+- Category update.
+- Category delete.
+- Category-wise wallpaper listing.
+- Wallpaper ko multiple categories assign karna.
+- Multiple category filters support karna.
+
+### Category Relationship
+
+One wallpaper multiple categories mein belong kar sakta hai.
+
+Ek category mein multiple wallpapers ho sakte hain.
+
+Isliye database mein many-to-many relationship required hogi.
+
+## FR-09: Collections Management
+
+User custom collections create kar sakega.
+
+Example:
+
+- Nature Wallpapers
+- Gaming Wallpapers
+- Minimal Wallpapers
+- AI Generated
+- Desktop Backgrounds
+
+Requirements:
+
+- Collection create.
+- Collection update.
+- Collection delete.
+- Wallpapers ko collection mein add/remove karna.
+- Collection-wise wallpaper listing.
+
+Ek wallpaper multiple collections mein add ho sakta hai ya nahi, ye database design se pehle confirm karna baaki hai.
+
+## FR-10: Favorites
+
+User apni wallpapers ko favorites mark kar sakega.
+
+Requirements:
+
+- Add to favorites.
+- Remove from favorites.
+- Favorite wallpapers ki separate listing.
+- Favorite status gallery aur detail page mein visible ho.
+- Favorites user-specific hon.
+
+## FR-11: Search and Filtering
+
+System wallpaper search aur filtering provide karega.
+
+Possible filters:
+
+- Wallpaper title.
+- Category.
+- Collection.
+- Favorites.
+- Upload date.
+
+Sorting aur pagination behavior UI/UX phase mein finalize hoga.
+
+## FR-12: Wallpaper Edit and Delete
+
+User apni existing wallpapers ki information update aur wallpaper delete kar sakega.
+
+Requirements:
+
+- Title update.
+- Description update, if included.
+- Categories update.
+- Collections update.
+- Wallpaper delete.
+- Delete confirmation.
+
+User kisi doosre user ki wallpaper edit/delete nahi kar sakega.
+
+Database record aur local image file ke deletion behavior ko safely handle kiya jayega.
+
+## FR-13: User Profile
+
+User apni basic profile information view aur update kar sakega.
+
+Initial expected fields:
+
+- Name.
+- Email display.
+- Profile information.
+
+Profile image aur other profile fields TBD hain.
+
+---
+
+# 5. Non-Functional Requirements
+
+## NFR-01: Security
+
+- Secure registration and login.
+- Password hashing.
+- Authentication-protected routes.
+- Server-side validation.
+- MIME type and file size validation.
+- User ownership verification.
+- Unauthorized data access prevention.
+- CSRF protection where applicable.
+- Secrets environment variables mein store honge.
+
+## NFR-02: Data Isolation
+
+Har user ka data logically separate rahega.
+
+- User apni wallpapers hi dekh sakega.
+- User apni categories aur collections manage karega.
+- User apne favorites access karega.
+- User doosre users ke private records access nahi kar sakega.
+- Backend par ownership authorization enforce hogi.
+
+Frontend filtering alone security ke liye sufficient nahi hogi.
+
+## NFR-03: Performance
+
+- Gallery efficiently load honi chahiye.
+- Bulk upload process manageable hona chahiye.
+- Image previews efficiently display hone chahiye.
+- Search and filtering responsive honi chahiye.
+- Large image processing ko carefully handle karna hoga.
+
+## NFR-04: Usability
+
+- Simple and understandable interface.
+- Easy upload process.
+- Clear navigation.
+- Responsive feedback messages.
+- Consistent UI components.
+
+## NFR-05: Maintainability
+
+- Modular backend structure.
+- Reusable React components.
+- Proper API organization.
+- Meaningful naming conventions.
+- Documentation and Git history.
+
+## NFR-06: Compatibility
+
+- Modern desktop browsers.
+- Responsive layout.
+- Mobile browser support as part of UI design.
+
+## NFR-07: Reliability
+
+- Failed uploads gracefully handle hon.
+- Invalid requests reject hon.
+- File and database consistency maintain ho.
+- Error logging available ho.
+
+---
+
+# 6. Technology Requirements
+
+| Layer | Proposed Technology |
+|---|---|
+| Frontend | React |
+| Build tooling | Vite |
+| UI Library | Material UI |
+| Backend | Laravel 12 |
+| Backend Language | PHP 8.2+ |
+| Database | MySQL |
+| API | REST API |
+| File Storage | Laravel Local Filesystem |
+| Development | Localhost |
+| Version Control | Git + GitHub |
+
+## Technology Selection
+
+**React:** Interactive frontend aur reusable components.
+
+**Material UI:** Consistent UI components.
+
+**Laravel 12:** Backend, authentication, validation, file handling and APIs.
+
+**MySQL:** Users, wallpapers, categories, collections and favorites ka structured data.
+
+**Laravel Local Filesystem:** Initial image storage without cloud dependency.
+
+---
+
+# 7. High-Level System Workflow
+
+1. User CloudWall open karega.
+2. User registration karega ya existing account se login karega.
+3. Laravel authentication process handle karega.
+4. User dashboard access karega.
+5. User single ya multiple wallpapers select karega.
+6. Laravel each file validate karega.
+7. Valid images local storage mein save hongi.
+8. Image metadata aur ownership MySQL mein save honge.
+9. React gallery API se logged-in user ke wallpapers fetch karega.
+10. User preview, download, categorize, favorite aur search kar sakega.
+
+---
+
+# 8. Data Requirements
+
+Initial database entities:
+
+1. Users
+2. Wallpapers
+3. Categories
+4. Wallpaper_Category (pivot)
+5. Collections
+6. Collection_Wallpaper (pivot – subject to confirmation)
+7. Favorites
+
+### Expected Relationships
+
+- One user has many wallpapers.
+- One user has many categories.
+- One user has many collections.
+- One wallpaper belongs to one owner.
+- One wallpaper can belong to multiple categories.
+- One category can contain multiple wallpapers.
+- One user can favorite multiple wallpapers.
+- One wallpaper can be favorited by its owner.
+
+### Important Database Rule
+
+User ownership har relevant entity par enforce honi chahiye.
+
+Category aur collection assignment mein ensure karna hoga ki user kisi doosre user ki category/collection ko apni wallpaper se associate na kar sake.
+
+Exact tables, columns, foreign keys, indexes and constraints database design phase mein finalize honge.
+
+---
+
+# 9. API Requirements
+
+Laravel backend React frontend ko REST APIs provide karega.
+
+| Module | Expected Operations |
+|---|---|
+| Authentication | Register, login, logout, current user |
+| Dashboard | User-specific summary |
+| Wallpapers | List, single upload, bulk upload, details, update, delete |
+| Categories | List, create, update, delete |
+| Collections | List, create, update, delete |
+| Favorites | Add, remove, list |
+| Search | Search and filter |
+| Profile | View and update |
+
+API documentation mein endpoints, HTTP methods, request payloads, response formats, validation and authorization rules define honge.
+
+---
+
+# 10. File Upload and Validation Rules
+
+| Requirement | Decision |
+|---|---|
+| JPG | Supported |
+| JPEG | Supported |
+| PNG | Supported |
+| WEBP | Supported |
+| Maximum size | 10 MB per image |
+| Single upload | Supported |
+| Bulk upload | Supported |
+| Cloud storage | Not included initially |
+| Local storage | Required |
+
+Bulk upload mein har file independently validate hogi.
+
+Example: Agar 5 images select ki gayi hain aur 1 invalid hai, system ko remaining valid files ka result clearly report karna hoga.
+
+Partial success/failure handling ka exact behavior implementation planning mein finalize hoga.
+
+---
+
+# 11. Testing Requirements
+
+Har feature ke test cases prepare kiye jayenge.
+
+| Test ID | Test Scenario | Expected Result |
+|---|---|---|
+| CW-TC-01 | New user registration | Account successfully create ho |
+| CW-TC-02 | Duplicate email registration | Registration reject ho |
+| CW-TC-03 | Valid login | Dashboard open ho |
+| CW-TC-04 | Invalid login | Error show ho |
+| CW-TC-05 | Valid JPG upload | Image save ho |
+| CW-TC-06 | Valid WEBP upload | Image save ho |
+| CW-TC-07 | Unsupported format upload | Upload reject ho |
+| CW-TC-08 | Image larger than 10 MB | Upload reject ho |
+| CW-TC-09 | Bulk upload | Valid images process hon |
+| CW-TC-10 | Multiple category assignment | All selected categories associate hon |
+| CW-TC-11 | Favorite wallpaper | Favorite list update ho |
+| CW-TC-12 | Search wallpaper | Matching records show hon |
+| CW-TC-13 | User A accesses User B wallpaper | Access reject ho |
+| CW-TC-14 | User A edits User B wallpaper | Operation reject ho |
+| CW-TC-15 | Unauthorized API request | Authentication required ho |
+
+Actual testing user karega aur results confirm karega. Final test report confirmed results par based hogi.
+
+---
+
+# 12. Deployment and Environment
+
+Initial development environment:
+
+- Windows local machine.
+- Laravel backend.
+- React frontend.
+- MySQL database.
+- Laravel local filesystem.
+- Localhost.
+
+Initial version mein public deployment required nahi hai.
+
+Repository documentation:
+
+- README.md
+- Installation guide
+- Database setup guide
+- .env.example
+- API documentation
+- Architecture documentation
+- Screenshots
+- Test reports
+- Known limitations
+
+Secrets aur credentials GitHub par commit nahi honge.
+
+---
+
+# 13. Future Enhancements
+
+Future versions mein consider kiya ja sakta hai:
+
+- Cloud storage.
+- Public deployment.
+- Email verification.
+- Password reset.
+- User profile images.
+- Public wallpaper sharing.
+- Advanced search.
+- Bulk download.
+- Image optimization.
+- Duplicate image detection.
+- AI image generation integration.
+- Admin dashboard.
+- Subscription features.
+
+Ye initial version ki confirmed requirements nahi hain.
+
+---
+
+# 14. Acceptance Criteria
+
+Initial version acceptable tab maana jayega jab:
+
+1. New users registration kar saken.
+2. Users securely login/logout kar saken.
+3. Har user ko apna dashboard mile.
+4. Single wallpaper upload work kare.
+5. Bulk upload work kare.
+6. JPG, JPEG, PNG and WEBP supported hon.
+7. 10 MB se badi file reject ho.
+8. Valid images local storage mein save hon.
+9. Metadata correct user ownership ke saath database mein save ho.
+10. Gallery user-specific wallpapers display kare.
+11. Multiple category assignment work kare.
+12. Collections management work kare.
+13. Favorites work kare.
+14. Search and filters work karein.
+15. Preview and download work karein.
+16. Edit/delete operations ownership enforce karein.
+17. Unauthorized users doosre users ka private data access na kar saken.
+18. Relevant test cases execute aur document kiye gaye hon.
+19. Project local environment par documented steps se run ho sake.
+
+---
+
+# 15. Pending Requirement Decisions
+
+In decisions ko database design aur architecture final karne se pehle confirm karna hai:
+
+1. Email verification required hogi ya nahi?
+2. Forgot password / reset password initial version mein hoga?
+3. Collections mein ek wallpaper multiple collections mein add ho sakta hai?
+4. Wallpaper description field required hogi?
+5. Soft delete ya permanent delete?
+6. Bulk upload mein partial success allow hoga?
+7. Admin role required hoga ya normal registered users hi sufficient hain?
+8. Pagination and sorting behavior?
+9. Profile image required hogi ya future feature?
+10. Duplicate image upload allow hoga ya detect karna hai?
+
+---
+
+# 16. Document Approval
+
+**Document:** CloudWall SRS  
+**Version:** 1.1  
+**Status:** Revised Draft – Awaiting Final Review
+
+Confirmed requirements:
+- Multi-user application.
+- Registration and login.
+- JPG/JPEG/PNG/WEBP.
+- Single and bulk uploads.
+- 10 MB maximum per image.
+- Multiple categories per wallpaper.
+- Local filesystem storage initially.
+
+Next phase:
+
+1. Pending requirements finalize karna.
+2. Use-case diagram prepare karna.
+3. User flows define karna.
+4. System architecture design karna.
+5. Database ER diagram prepare karna.
+6. API specification define karna.
+7. UI/UX design start karna.
+8. User approval ke baad development start karna.
+
+**Development tabhi start hogi jab SRS aur architecture approve ho jayenge.**
