@@ -1,0 +1,105 @@
+# CloudWall – Technology & UI/UX Decisions
+
+**Document Version:** 1.0  
+**Project:** CloudWall  
+**Status:** Approved  
+**Date:** 14 November 2026
+
+## 1. Project Technology Stack
+
+| Layer | Selected Technology |
+|---|---|
+| Backend | Laravel 12 |
+| Frontend | React |
+| Build Tool | Vite |
+| UI Component Library | Material UI |
+| Database | MySQL |
+| API Architecture | REST API |
+| Authentication | Laravel Sanctum |
+| UI/UX Design | Google Stitch |
+
+## 2. UI/UX Design Decision
+
+**Selected Tool: Google Stitch**
+
+Google Stitch will be used for designing CloudWall's user interface and user experience.
+
+The purpose is to explore, create and finalize visual designs before implementing them in React.
+
+### Design responsibilities
+
+- Create homepage layouts.
+- Design wallpaper cards and carousels.
+- Design wallpaper detail pages.
+- Design login and registration screens.
+- Design user dashboard.
+- Design favorites and collections pages.
+- Design admin dashboard and wallpaper management screens.
+
+### Design direction
+
+CloudWall will follow a dark, cinematic and modern visual direction inspired by streaming platforms such as Netflix.
+
+The design must remain original and maintain CloudWall's own identity.
+
+## 3. UI Implementation Decision
+
+Google Stitch may generate HTML, CSS and JavaScript code.
+
+However, the final frontend will be developed using React.
+
+The implementation process will be:
+
+1. Create and finalize screens in Google Stitch.
+2. Export or refer to the generated design and code.
+3. Convert HTML into React JSX.
+4. Divide the interface into reusable React components.
+5. Adapt styling and interactions for React.
+6. Integrate Material UI where appropriate.
+7. Connect React components with Laravel REST APIs.
+
+**Important:** Stitch-generated code will be treated as a design and implementation reference, not as the final production frontend.
+
+## 4. Frontend Development Principles
+
+- Use reusable React components.
+- Keep components organized and maintainable.
+- Separate pages, components and API services.
+- Use Material UI where it provides value.
+- Use custom CSS for CloudWall-specific styling.
+- Maintain responsive layouts for desktop, tablet and mobile.
+- Avoid unnecessary duplication of UI code.
+
+## 5. Backend Integration
+
+Laravel will handle:
+
+- User authentication and authorization.
+- Wallpaper management.
+- Categories and keywords.
+- Favorites and collections.
+- Wallpaper views and download histories.
+- Search functionality.
+- Admin operations.
+
+React will communicate with Laravel through REST APIs.
+
+## 6. Important Project Decisions
+
+| Decision | Status |
+|---|---|
+| Google Stitch for UI/UX design | Approved |
+| React for frontend implementation | Approved |
+| Laravel 12 for backend | Approved |
+| Material UI with custom CSS | Approved |
+| MySQL for database | Approved |
+| Stitch HTML code directly as final frontend | Not selected |
+| Reusable React components | Approved |
+
+## 7. Final Decision
+
+Google Stitch will be the UI/UX design tool for CloudWall. The approved designs will be implemented in React using a reusable component-based architecture.
+
+The final implementation must preserve the approved visual design while following clean React development practices.
+
+**Document Status: Approved**
